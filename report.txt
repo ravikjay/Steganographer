@@ -1,0 +1,63 @@
+Ravi Jayanthi 
+104-459-372
+Project 4 - CS32
+
+1. Bugs — When I pass in a very large message of completely randomly generated characters (2 million+ characters), my program will add extra characters to the message I have decoded. The message is decoded properly, but it adds some consistent different number of characters. Through debugging, I have ascertained the problem to be somewhere in my HashTable, possibly in the discard method, but I was unable to figure out specifically what is going in. Besides this edge case, to my knowledge, my code functions properly as detailed in the spec, passing the majority of regular messages.
+
+
+2. Big-O — To my knowledge, I have implemented all methods written thus far with the proper big-O requirements detailed in the spec. 
+
+3.
+   set()
+	if the table has reached its maximum capacity (i.e. isFull)
+		return false
+	get a pointer to the bucket that a specific key identifies 
+	if there are no Nodes in a bucket’s linked list 
+		create a new Node
+		set its permanence to whatever was passed in
+		set its next & previous pointers to null
+		increment number of associations 
+		make it the most recently added
+		return true
+	loop through the linked list until you’ve found a Node with the key you’re looking for 
+		if the permanence of this Node is false
+			if this node is the least recently added Node
+				connect the history (recency) previous and next pointers
+				set the most recently added to be this node
+				return true
+			else
+				connect the history (recency) previous and next pointers
+				set the most recently added to be this node
+				return true
+	if there was no Node with a matching key 
+		construct a new Node with the passed in key, value, & permanence
+		if the permanence of this new Node is false
+			connect the history (recency) previous and next pointers
+			set the most recently added Node to be this one 
+		increment number of associations
+		return true
+
+   touch()
+	get a pointer to the bucket that a specific key identifies 
+	loop through the linked list until you’ve found a Node with the key you’re looking for 
+		if the permanence of this Node is false
+			connect the history (recency) previous and next pointers
+			set the most recently added to be this node
+			return true
+	if no node was found, return false
+
+   discard()
+	get a pointer to the bucket to the least recently added Node
+	if there are no nodes in the table (i.e. least recently added is null)
+		return false because nothing can be discarded
+	set the key & value passed in equal to the key & value of current Node being pointed to
+	if we’re trying to delete the first Node in the linked list 
+		connect the head pointer from the array of pointers to null
+	if we’re trying to delete some middle Node in the linked list 
+		connect the next & previous pointers for the Nodes on either side of current
+	if we’re trying to delete the last Node in the linked list
+		connect the previous Node’s next to null
+	make the previous Node be the least recently added
+	delete the node 
+	decrement the number of associations 
+	return true
